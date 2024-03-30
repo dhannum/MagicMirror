@@ -57,18 +57,13 @@ Temporary Items
 .directory
 .Trash-*
 
-# Ignore all modules except the default modules.
+# Ignore all modules except the default modules and the special birthday module.
 /modules/**
 !/modules/default
 !/modules/default/**
 !/modules/README.md**
-
-# Ignore changes to the custom css files.
-/css/custom.css
-
-# Ignore users config file but keep the sample.
-/config/*
-!/config/config.js.sample
+!/modules/birthdays
+!/modules/birthdays/**
 
 # Vim
 ## swap

@@ -1,0 +1,3 @@
+cd ./MagicMirror
+npm start
+

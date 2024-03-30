@@ -1,0 +1,159 @@
+/* MagicMirror² Custom CSS Sample
+ *
+ * Change color and fonts here.
+ *
+ * Beware that properties cannot be unitless, so for example write '--gap-body: 0px;' instead of just '--gap-body: 0;'
+ *
+ * MIT Licensed.
+ */
+
+/* Uncomment and adjust accordingly if you want to import another font from the google-fonts-api: */
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700&display=swap'); */
+
+:root {
+  --color-text: #999;
+  --color-text-dimmed: #666;
+  --color-text-bright: #fff;
+  --color-background: black;
+
+  --font-primary: "Roboto Condensed";
+  --font-secondary: "Roboto";
+  
+  --font-size: 40px;
+  --font-size-small: 0.75rem;
+
+  --gap-body-top: 60px;
+  --gap-body-right: 60px;
+  --gap-body-bottom: 60px;
+  --gap-body-left: 60px;
+  
+  --gap-modules: 30px;
+}
+
+div.bottomfade {
+  height: 400px;
+}
+
+/* TODOIST */
+#module_6_MMM-Todoist .divTableRow {
+  font-size: 25pt;
+}
+
+#module_6_MMM-Todoist .module-header {
+  font-size: 25pt;
+}
+
+/* NEWS */
+#module_7_newsfeed .newsfeed-source {
+  word-wrap: break-word;
+  width: 400px;
+  font-size: 15pt;
+}
+#module_7_newsfeed .newsfeed-title {
+  word-wrap: break-word;
+  width: 400px;
+  font-size: 30pt;
+}
+#module_7_newsfeed .newsfeed-desc {
+  word-wrap: break-word;
+  width: 400px;
+  font-size: 15pt;
+}
+
+/* All entries */
+
+.CX2 .slot .slotHeader {
+  height: 45px;
+  line-height: 45px;
+}
+.CX2 .slot {
+  width: 900px;
+}
+.CX2 .slotTitle {
+  margin-top: 10px;
+  font-size: 30pt;
+}
+.CX2 .slotAltTitle {
+  margin-top: 10px;
+  font-size: 30pt;
+}
+.CX2 .slotSubTitle {
+  margin-top: 10px;
+  font-size: 30pt;
+}
+
+.CX2 .column .event {
+  width: 900px;
+  max-width: 900px;
+}
+.CX2 .column .event .eventMain {
+  width: 900px;
+  max-width: 900px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+.CX2 .event .eventTitle {
+  width: 400px;
+  font-size: 25pt;
+  height: 30px;
+  line-height: 30px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+.CX2 .event .eventTime {
+  width: 400px;
+  height: 30px;
+  line-height: 30px;
+  margin-top: 5px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+.CX2 .event .eventTime .time {
+  font-size: 25pt;
+}
+.CX2 .event .eventTime .date {
+  font-size: 25pt;
+}
+
+/* Erin */
+.CX2 .event[data-calendar-name="Family"][data-title~="Erin"] {
+  background-color: #f5511d;
+}
+
+/* Matthew */
+.CX2 .event[data-calendar-name="Family"][data-title~="Matthew"] {
+  background-color: #3f51b5;
+}
+
+/* Colin */
+.CX2 .event[data-calendar-name="Family"][data-title~="Colin"] {
+  background-color: #d60000;
+}
+
+/* Mommy */
+.CX2 .event[data-calendar-name="Family"][data-title*="Meg"] {
+  background-color: #8e24aa;
+}
+
+.CX2 .event[data-calendar-name="Family"][data-title*="Mom"] {
+  background-color: #8e24aa;
+}
+
+/* Daddy */
+.CX2 .event[data-calendar-name="Family"][data-title*="Dan"] {
+  background-color: #f6c026;
+}
+
+.CX2 .event[data-calendar-name="Family"][data-title*="Dad"] {
+  background-color: #f6c026;
+}
+
+/* Not tied to a specific person */
+.CX2 .event[data-calendar-name="Family"] {
+  background-color: #33b679;
+}
+
+/* Holiday calendar */
+.CX2 .event[data-calendar-name="Holidays"] {
+  background-color: #616161;
+}
