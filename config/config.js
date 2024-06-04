@@ -59,7 +59,7 @@ let config = {
 			config: {
 				// See "Configuration options" for more information.
 				apiKey: "WEATHER_API_KEY",
-				latitude:   32.9246,
+				latitude:   34.9246,
 				longitude: -80.7434
 			}
   		},
