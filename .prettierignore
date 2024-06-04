@@ -1,7 +1,16 @@
 *.js
+.eslintignore
+.husky/pre-commit
 .prettierignore
 /config
 /coverage
 package-lock.json
 **.ics
 /scripts
+.gitignore
+.npmrc
+/css/custom.css.sample
+mm2.png
+/modules
+/tests/configs/port_variable.js.template
+
