@@ -121,7 +121,11 @@ div.bottomfade {
 }
 
 /* Matthew */
-.CX2 .event[data-calendar-name="Family"][data-title~="Matthew"] {
+.CX2 .event[data-calendar-name="Family"][data-title~="Matt"] {
+  background-color: #3f51b5;
+}
+
+.CX2 .event[data-calendar-name="Family"][data-title~="Magoo"] {
   background-color: #3f51b5;
 }
 

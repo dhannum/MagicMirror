@@ -13,4 +13,5 @@ package-lock.json
 mm2.png
 /modules
 /tests/configs/port_variable.js.template
+.stylelintignore
 
