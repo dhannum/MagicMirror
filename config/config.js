@@ -52,17 +52,17 @@ let config = {
 			module: "WallberryTheme/WB-clock",
 			position: "top_bar", // highly suggest using top_bar position
 			config: {}
-  		},
+		},
 		{
 			module: "WallberryTheme/WB-weather",
 			position: "bottom_bar",  // Highly suggested location
 			config: {
 				// See "Configuration options" for more information.
 				apiKey: "WEATHER_API_KEY",
-				latitude:   34.9246,
+				latitude: 34.9246,
 				longitude: -80.7434
 			}
-  		},
+		},
 		{
 			module: "alert",
 		},
@@ -71,77 +71,75 @@ let config = {
 			position: "top_bar"
 		},
 		{
-    			module: 'MMM-CalendarExt2',
+			module: "MMM-CalendarExt2",
 			disabled: false,
-    			config: {
-        			rotateInterval: 60*1000,
-        			deduplicateEventsOn: [
-          				"startDate", "endDate", "title",
-        			],
-        			scenes:[
-            				{
-                				name: "DEFAULT",
-                				views: ["week-vertical"],
-            				},
-        			],
-        			views:[
-            				{
-                				name: "week-vertical",
-                				title: "Family Calendar",
-                				mode: "daily",
-                				position: "top_left",
-                				slotCount: 6,
-                				locale: "en",
-                				hideOverflow: false,
-                				filterPassedEvent: true,
+			config: {
+				rotateInterval: 60 * 1000,
+				deduplicateEventsOn: ["startDate", "endDate", "title",],
+				scenes: [
+					{
+						name: "DEFAULT",
+						views: ["week-vertical"],
+					},
+				],
+				views: [
+					{
+						name: "week-vertical",
+						title: "Family Calendar",
+						mode: "daily",
+						position: "top_left",
+						slotCount: 6,
+						locale: "en",
+						hideOverflow: false,
+						filterPassedEvent: true,
 						timeFormat: "h:mm a",
 						dateTimeFormat: {
 							sameDay: "[Today] h:mm a",
-  							nextDay: "[Tomorrow] h:mm a",
-  							nextWeek: "dddd h:mm a",
-  							lastDay: "[Yesterday] h:mm a",
-  							lastWeek: "[Last] ddd h:mm a",
-  							sameElse: "MM/DD h:mm a"
+							nextDay: "[Tomorrow] h:mm a",
+							nextWeek: "dddd h:mm a",
+							lastDay: "[Yesterday] h:mm a",
+							lastWeek: "[Last] ddd h:mm a",
+							sameElse: "MM/DD h:mm a"
 						},
 						slotMaxHeight: "160px",
-                				calendars: [
-                  					"Family", "Holidays", "Birthdays"
-                				],
-            				},
-        			],
-        			calendars: [
+						calendars: ["Family", "Holidays", "Birthdays"],
+					},
+				],
+				calendars: [
 					{
-                        			name: "Family",
-                                		url: "FAMILY_CALENDAR_URL",
-						scanInterval: 1000*60*5
-                        		},
-                                        {
-                                                name: "Birthdays",
-                                                symbol: "birthday-cake",
-                                                url: "http://0.0.0.0:8080/modules/birthdays/birthdays.ics",
-                                        },
-                                        {
-                                                name: "Holidays",
-                                                url: "https://p24-calendars.icloud.com/holiday/US_en.ics"
-                                        }
-			        ],
-    			},
+						name: "Family",
+						url: "FAMILY_CALENDAR_URL",
+						scanInterval: 1000 * 60 * 5
+					},
+					{
+						name: "Birthdays",
+						symbol: "birthday-cake",
+						url: "http://0.0.0.0:8080/modules/birthdays/birthdays.ics",
+					},
+					{
+						name: "Holidays",
+						url: "https://p24-calendars.icloud.com/holiday/US_en.ics"
+					}
+				],
+			},
 		},
 		{
-			module: 'MMM-Todoist',
+			module: "MMM-Todoist",
 			disabled: false,
-			position: 'bottom_left',	// This can be any of the regions. Best results in left or right regions.
-			header: 'Todos',
+			position: "bottom_left",	// This can be any of the regions. Best results in left or right regions.
+			header: "Todos",
 			config: {
 				hideWhenEmpty: false,
-				accessToken: 'TODOIST_API_KEY',
+				accessToken: "TODOIST_API_KEY",
 				maximumEntries: 60,
-				updateInterval: 5*60*1000,
+				updateInterval: 5 * 60 * 1000,
 				wrapEvents: true,
+				displayTasksWithinDays: 1,
+				sortType: "dueDateAsc",
 				fade: false,
 				showProject: false,
-				projects: [ 2306512981 ]
-      			}
+				projects: [2306512981]
+			}
 		},
 		{
 			module: "newsfeed",
@@ -154,9 +152,9 @@ let config = {
 						url: "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
 					},
 					{
-          					title: "BBC",
-          					url: "http://feeds.bbci.co.uk/news/world/rss.xml",
-        				},
+						title: "BBC",
+						url: "http://feeds.bbci.co.uk/news/world/rss.xml",
+					},
 					{
 						title: "WCNC",
 						url: "https://feeds.feedblitz.com/wcnc/home",
@@ -180,4 +178,4 @@ let config = {
 };
 
 /*************** DO NOT EDIT THE LINE BELOW ***************/
-if (typeof module !== "undefined") {module.exports = config;}
+if (typeof module !== "undefined") { module.exports = config; }

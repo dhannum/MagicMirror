@@ -116,21 +116,21 @@ div.bottomfade {
 }
 
 /* Erin */
-.CX2 .event[data-calendar-name="Family"][data-title~="Erin"] {
+.CX2 .event[data-calendar-name="Family"][data-title*="Erin"] {
   background-color: #f5511d;
 }
 
 /* Matthew */
-.CX2 .event[data-calendar-name="Family"][data-title~="Matt"] {
+.CX2 .event[data-calendar-name="Family"][data-title*="Matt"] {
   background-color: #3f51b5;
 }
 
-.CX2 .event[data-calendar-name="Family"][data-title~="Magoo"] {
+.CX2 .event[data-calendar-name="Family"][data-title*="Magoo"] {
   background-color: #3f51b5;
 }
 
 /* Colin */
-.CX2 .event[data-calendar-name="Family"][data-title~="Colin"] {
+.CX2 .event[data-calendar-name="Family"][data-title*="Colin"] {
   background-color: #d60000;
 }
 
