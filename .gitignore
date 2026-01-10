@@ -9,8 +9,7 @@ lib-cov
 coverage
 .lock-wscript
 build/Release
-/node_modules/**/*
-!/tests/node_modules/**/*
+node_modules
 jspm_modules
 .npm
 .node_repl_history
@@ -58,21 +57,19 @@ Temporary Items
 # Ignore all modules except the default modules and the special birthday module.
 /modules/**
 !/modules/default
-!/modules/default/**
-!/modules/README.md**
 !/modules/birthdays
 !/modules/birthdays/**
 
 # Ignore changes to the custom css files but keep the sample and main.
 /css/*
 !/css/custom.css.sample
+!/css/font-awesome.css
 !/css/main.css
 !/css/roboto.css
-!/css/font-awesome.css
 
 # Ignore users config file but keep the sample.
-/config/*
-!/config/config.js.sample
+config
+!config/config.js.sample
 
 # Vim
 ## swap
@@ -90,3 +87,6 @@ js/positions.js
 # Ignore lock files other than package-lock.json
 pnpm-lock.yaml
 yarn.lock
+
+# Vitest temporary test files
+tests/**/.tmp/
