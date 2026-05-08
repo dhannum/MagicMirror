@@ -54,13 +54,20 @@ let config = {
 			config: {}
 		},
 		{
-			module: "WallberryTheme/WB-weather",
-			position: "bottom_bar",  // Highly suggested location
+			module: "MMM-OpenWeatherForecast",
+			position: "bottom_left",  // Highly suggested location
 			config: {
-				// See "Configuration options" for more information.
-				apiKey: "WEATHER_API_KEY",
+				apikey: "WEATHER_API_KEY",
 				latitude: 34.9246,
-				longitude: -80.7434
+				longitude: -80.7434,
+				units: "imperial",
+				showHourlyForecast: false,
+				forecastHeaderText: "",
+				extraCurrentConditions: {
+					highLowTemp: true,
+					precipitation: true,
+					wind: true,
+				},
 			}
 		},
 		{
@@ -85,7 +92,7 @@ let config = {
 				views: [
 					{
 						name: "week-vertical",
-						title: "Family Calendar",
+						title: "",
 						mode: "daily",
 						position: "top_left",
 						slotCount: 6,
@@ -126,8 +133,8 @@ let config = {
 		{
 			module: "MMM-Todoist",
 			disabled: false,
-			position: "bottom_left",	// This can be any of the regions. Best results in left or right regions.
-			header: "Todos",
+			position: "bottom_bar",	// This can be any of the regions. Best results in left or right regions.
+			header: "Chores",
 			config: {
 				hideWhenEmpty: false,
 				accessToken: "TODOIST_API_KEY",
@@ -138,7 +145,7 @@ let config = {
 				sortType: "dueDateAsc",
 				fade: false,
 				showProject: false,
-				projects: [2306512981]
+				projects: ['6MpVch9Q4fmGQ5J2']
 			}
 		},
 		{
