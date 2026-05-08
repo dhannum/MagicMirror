@@ -59,10 +59,8 @@ Temporary Items
 !/modules/birthdays
 !/modules/birthdays/**
 
-# Ignore users config file but keep the samples.
-config
-!config/config.js.sample
-!config/custom.css.sample
+# Ignore only basepath in config. Not sure what it's used for, but since I've forked I can commit my config.
+config/basepath.js
 
 # Vim
 ## swap

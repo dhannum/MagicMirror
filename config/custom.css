@@ -161,3 +161,13 @@ div.bottomfade {
 .CX2 .event[data-calendar-name="Holidays"] {
   background-color: #616161;
 }
+
+/* Weather attribution */
+.attribution {
+  display: none;
+}
+
+.forecast-container.daily {
+  margin-bottom: 0px;
+}
+
