@@ -7,6 +7,8 @@
  * see https://docs.magicmirror.builders/configuration/introduction.html
  * and https://docs.magicmirror.builders/modules/configuration.html
  */
+const secrets = require("/home/dhannum/secrets.js");
+
 let config = {
 	address: "0.0.0.0", 	// Address to listen on, can be:
 							// - "localhost", "127.0.0.1", "::1" to listen on loopback interface
@@ -41,7 +43,7 @@ let config = {
 			module: "WallberryTheme",
 			position: "fullscreen_below", // Required Position
 			config: {
-				unsplashAccessKey: "UNSPLASH_ACCESS_KEY",
+				unsplashAccessKey: secrets.unsplashAccessKey,
 				collections: "1319040,I3fsfiCb6Ek",
 				brightImageOpacity: 0.5,
 				addBackgroundFade: ["bottom"],
@@ -57,7 +59,7 @@ let config = {
 			module: "MMM-OpenWeatherForecast",
 			position: "bottom_left",  // Highly suggested location
 			config: {
-				apikey: "WEATHER_API_KEY",
+				apikey: secrets.weatherApiKey,
 				latitude: 34.9246,
 				longitude: -80.7434,
 				units: "imperial",
@@ -115,7 +117,7 @@ let config = {
 				calendars: [
 					{
 						name: "Family",
-						url: "FAMILY_CALENDAR_URL",
+						url: secrets.familyCalendarUrl,
 						scanInterval: 1000 * 60 * 5
 					},
 					{
@@ -137,7 +139,7 @@ let config = {
 			header: "Chores",
 			config: {
 				hideWhenEmpty: false,
-				accessToken: "TODOIST_API_KEY",
+				accessToken: secrets.todoistApiKey,
 				maximumEntries: 60,
 				updateInterval: 5 * 60 * 1000,
 				wrapEvents: true,

@@ -81,3 +81,7 @@ yarn.lock
 
 # Vitest temporary test files
 tests/**/.tmp/
+
+# Core crap
+core
+
