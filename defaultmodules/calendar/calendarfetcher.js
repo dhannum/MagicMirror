@@ -51,8 +51,21 @@ class CalendarFetcher {
 	 */
 	async #handleResponse (response) {
 		try {
+			// 304 Not Modified has no body: keep previously fetched events and just re-broadcast them.
+			if (response.status === 304) {
+				this.lastFetch = Date.now();
+				this.broadcastEvents();
+				return;
+			}
+
 			const responseData = await response.text();
-			const parsed = ical.parseICS(responseData);
+
+			const filteredData = await CalendarFetcherUtils.preFilterICS(responseData, {
+				includePastEvents: this.includePastEvents,
+				maximumNumberOfDays: this.maximumNumberOfDays
+			});
+
+			const parsed = await ical.async.parseICS(filteredData);
 
 			Log.debug(`Parsed iCal data from ${this.url} with ${Object.keys(parsed).length} entries.`);
 

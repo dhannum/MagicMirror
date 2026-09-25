@@ -33,7 +33,8 @@ Module.register("newsfeed", {
 		prohibitedWords: [],
 		scrollLength: 500,
 		logFeedWarnings: false,
-		dangerouslyDisableAutoEscaping: false
+		dangerouslyDisableAutoEscaping: false,
+		allowedBasicHtmlTags: []
 	},
 
 	getUrlPrefix (item) {
@@ -148,7 +149,7 @@ Module.register("newsfeed", {
 			}
 			return Promise.resolve(wrapper);
 		}
-		return this._super();
+		return Module.prototype.getDom.call(this);
 	},
 
 	//Override fetching of template name

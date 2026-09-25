@@ -7,7 +7,7 @@ const helmet = require("helmet");
 const socketio = require("socket.io");
 const Log = require("logger");
 
-const { ipAccessControl } = require("./ip_access_control");
+const { ipAccessControl, socketIpAccessControl } = require("./ip_access_control");
 
 const vendor = require("./vendor");
 
@@ -41,6 +41,7 @@ function Server (configObj) {
 				server = http.Server(app);
 			}
 			const io = socketio(server, {
+				allowRequest: socketIpAccessControl(config.ipWhitelist),
 				cors: {
 					origin: /.*$/,
 					credentials: true
@@ -97,12 +98,13 @@ function Server (configObj) {
 				});
 			}
 
-			let directories = ["/config", "/css", "/favicon.svg", "/defaultmodules", "/modules", "/node_modules/animate.css", "/node_modules/@fontsource", "/node_modules/@fortawesome", "/translations", "/tests/configs", "/tests/mocks"];
+			let directories = ["/config", "/css", "/favicon.svg", "/defaultmodules", "/modules", "/node_modules/animate.css", "/node_modules/@fontsource", "/node_modules/@fortawesome", "/node_modules/suncalc", "/translations", "/tests/configs", "/tests/mocks"];
 			for (const value of Object.values(vendor)) {
 				const dirArr = value.split("/");
 				if (dirArr[0] === "node_modules") directories.push(`/${dirArr[0]}/${dirArr[1]}`);
 			}
 			const uniqDirs = [...new Set(directories)];
+
 			for (const directory of uniqDirs) {
 				app.use(directory, express.static(path.resolve(global.root_path + directory)));
 			}

@@ -1,20 +1,39 @@
 const express = require("express");
 const Log = require("logger");
-const Class = require("./class");
 const { replaceSecretPlaceholder } = require("#server_functions");
 
-const NodeHelper = Class.extend({
+/**
+ * Determine which secrets a module is allowed to restore. A module may only
+ * restore the `**SECRET_***` placeholders that appear in its own config — the
+ * exact inverse of how the config is redacted before it is sent to the browser.
+ * @param {string} moduleName - Name of the module.
+ * @returns {Set<string>} The secret names the module may restore.
+ */
+function getAllowedSecrets (moduleName) {
+	const modules = global.configRedacted?.modules || [];
+	const moduleConfig = modules.find((m) => m.module === moduleName);
+	const allowed = new Set();
+	if (moduleConfig) {
+		// Stringify the config to easily find all expected **SECRET_*** placeholders
+		for (const [, secretName] of JSON.stringify(moduleConfig).matchAll(/\*\*(SECRET_[^*]+)\*\*/g)) {
+			allowed.add(secretName);
+		}
+	}
+	return allowed;
+}
+
+class NodeHelper {
 	init () {
 		Log.log("Initializing new module helper ...");
-	},
+	}
 
 	loaded () {
 		Log.log(`Module helper loaded: ${this.name}`);
-	},
+	}
 
 	start () {
 		Log.log(`Starting module helper: ${this.name}`);
-	},
+	}
 
 	/**
 	 * Called when the MagicMirror² server receives a `SIGINT`
@@ -23,7 +42,7 @@ const NodeHelper = Class.extend({
 	 */
 	stop () {
 		Log.log(`Stopping module helper: ${this.name}`);
-	},
+	}
 
 	/**
 	 * This method is called when a socket notification arrives.
@@ -32,7 +51,7 @@ const NodeHelper = Class.extend({
 	 */
 	socketNotificationReceived (notification, payload) {
 		Log.log(`${this.name} received a socket notification: ${notification} - Payload: ${payload}`);
-	},
+	}
 
 	/**
 	 * Set the module name.
@@ -40,7 +59,7 @@ const NodeHelper = Class.extend({
 	 */
 	setName (name) {
 		this.name = name;
-	},
+	}
 
 	/**
 	 * Set the module path.
@@ -48,7 +67,7 @@ const NodeHelper = Class.extend({
 	 */
 	setPath (path) {
 		this.path = path;
-	},
+	}
 
 	/*
 	 * sendSocketNotification(notification, payload)
@@ -59,7 +78,7 @@ const NodeHelper = Class.extend({
 	 */
 	sendSocketNotification (notification, payload) {
 		this.io.of(this.name).emit(notification, payload);
-	},
+	}
 
 	/*
 	 * setExpressApp(app)
@@ -72,7 +91,7 @@ const NodeHelper = Class.extend({
 		this.expressApp = app;
 
 		app.use(`/${this.name}`, express.static(`${this.path}/public`));
-	},
+	}
 
 	/*
 	 * setSocketIO(io)
@@ -91,7 +110,10 @@ const NodeHelper = Class.extend({
 			socket.onAny((notification, payload) => {
 				if (config?.hideConfigSecrets && payload && typeof payload === "object") {
 					try {
-						const payloadStr = replaceSecretPlaceholder(JSON.stringify(payload));
+						// Calculate exactly which secrets this module is allowed to receive
+						const allowedSecrets = getAllowedSecrets(this.name);
+						// Expand only these safe, module-specific secrets in the payload
+						const payloadStr = replaceSecretPlaceholder(JSON.stringify(payload), allowedSecrets);
 						this.socketNotificationReceived(notification, JSON.parse(payloadStr));
 					} catch (e) {
 						Log.error("Error substituting variables in payload: ", e);
@@ -103,38 +125,54 @@ const NodeHelper = Class.extend({
 			});
 		});
 	}
-});
 
-NodeHelper.checkFetchStatus = function (response) {
-	// response.status >= 200 && response.status < 300
-	if (response.ok) {
-		return response;
-	} else {
-		throw Error(response.statusText);
-	}
-};
-
-/**
- * Look at the specified error and return an appropriate error type, that
- * can be translated to a detailed error message
- * @param {Error} error the error from fetching something
- * @returns {string} the string of the detailed error message in the translations
- */
-NodeHelper.checkFetchError = function (error) {
-	let error_type = "MODULE_ERROR_UNSPECIFIED";
-	if (error.code === "EAI_AGAIN") {
-		error_type = "MODULE_ERROR_NO_CONNECTION";
-	} else {
-		const message = typeof error.message === "string" ? error.message.toLowerCase() : "";
-		if (message.includes("unauthorized") || message.includes("http 401") || message.includes("http 403")) {
-			error_type = "MODULE_ERROR_UNAUTHORIZED";
+	/**
+	 * Check the status of a fetch response.
+	 * @param {Response} response The fetch response.
+	 * @returns {Response} The fetch response if ok.
+	 */
+	static checkFetchStatus (response) {
+		// response.status >= 200 && response.status < 300
+		if (response.ok) {
+			return response;
+		} else {
+			throw Error(response.statusText);
 		}
 	}
-	return error_type;
-};
 
-NodeHelper.create = function (moduleDefinition) {
-	return NodeHelper.extend(moduleDefinition);
-};
+	/**
+	 * Look at the specified error and return an appropriate error type, that
+	 * can be translated to a detailed error message
+	 * @param {Error} error the error from fetching something
+	 * @returns {string} the string of the detailed error message in the translations
+	 */
+	static checkFetchError (error) {
+		let error_type = "MODULE_ERROR_UNSPECIFIED";
+		if (error.code === "EAI_AGAIN") {
+			error_type = "MODULE_ERROR_NO_CONNECTION";
+		} else {
+			const message = typeof error.message === "string" ? error.message.toLowerCase() : "";
+			if (message.includes("unauthorized") || message.includes("http 401") || message.includes("http 403")) {
+				error_type = "MODULE_ERROR_UNAUTHORIZED";
+			}
+		}
+		return error_type;
+	}
+
+	/**
+	 * Create a new NodeHelper subclass with the given module definition.
+	 * @param {object} moduleDefinition Methods and properties for the helper.
+	 * @returns {typeof NodeHelper} A new subclass of NodeHelper.
+	 */
+	static create (moduleDefinition) {
+		return class extends NodeHelper {
+			constructor () {
+				super();
+				Object.assign(this, moduleDefinition);
+				this.init();
+			}
+		};
+	}
+}
 
 module.exports = NodeHelper;

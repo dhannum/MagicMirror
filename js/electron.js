@@ -3,6 +3,7 @@
 const electron = require("electron");
 const core = require("./app");
 const Log = require("./logger");
+const { applyElectronSwitches } = require("./electron_helper");
 
 // Config
 let config = process.env.config ? JSON.parse(process.env.config) : {};
@@ -36,15 +37,14 @@ function createWindow () {
 	 * see https://www.electronjs.org/docs/latest/api/screen
 	 * Create a window that fills the screen's available work area.
 	 */
-	let electronSize = (800, 600);
+	let electronSize = { width: 800, height: 600 };
 	try {
 		electronSize = electron.screen.getPrimaryDisplay().workAreaSize;
 	} catch {
 		Log.warn("Could not get display size, using defaults ...");
 	}
 
-	let electronSwitchesDefaults = ["autoplay-policy", "no-user-gesture-required"];
-	app.commandLine.appendSwitch(...new Set(electronSwitchesDefaults, config.electronSwitches));
+	applyElectronSwitches(app.commandLine, config.electronSwitches);
 	let electronOptionsDefaults = {
 		width: electronSize.width,
 		height: electronSize.height,
@@ -100,7 +100,7 @@ function createWindow () {
 		prefix = "http://";
 	}
 
-	let address = (config.address === void 0) | (config.address === "") | (config.address === "0.0.0.0") ? (config.address = "localhost") : config.address;
+	let address = (config.address === void 0) | (config.address === "") | (config.address === "0.0.0.0") | (config.address === "::") ? (config.address = "localhost") : config.address;
 	const port = process.env.MM_PORT || config.port;
 	mainWindow.loadURL(`${prefix}${address}:${port}`);
 
